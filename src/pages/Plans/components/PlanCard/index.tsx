@@ -1,6 +1,8 @@
 import { formatCurrency } from "../../../../utils/formatPrice";
 import { IPlanCard } from "./types";
 import { cardColor } from "./style";
+import { createSession } from "../../api";
+import { toast } from "react-toastify";
 
 const PlanCard = ({
   colorName,
@@ -9,8 +11,14 @@ const PlanCard = ({
   name,
   price,
 }: IPlanCard) => {
-  const goToCheckout = (id: string) => {
-    return console.log(id);
+  const goToCheckout = async (priceId: string) => {
+    try {
+      const { data } = await createSession({ priceId });
+
+      window.location.href = data.url;
+    } catch (error) {
+      toast.error("Erro ao redirecionar para o checkout.");
+    }
   };
 
   return (

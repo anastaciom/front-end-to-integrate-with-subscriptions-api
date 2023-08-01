@@ -1,4 +1,5 @@
 import api from "../../../services/api";
+import { TCreateSessionProps } from "./types";
 
 const fetchAllPlans = () => {
   const response = api.get("/plans");
@@ -6,4 +7,10 @@ const fetchAllPlans = () => {
   return response;
 };
 
-export { fetchAllPlans };
+const createSession = (params: TCreateSessionProps) => {
+  const response = api.post("/session", params);
+
+  return response;
+};
+
+export { fetchAllPlans, createSession };
