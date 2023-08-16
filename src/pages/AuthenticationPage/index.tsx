@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormSchema, formSchema } from "./validate";
 import { InputCustom } from "../../components/InputCustom";
+import { createAccount } from "./api";
+import { TCreateAccountProps } from "./api/types";
+import { showError } from "../../utils/showError";
 
 const AuthenticationPage = () => {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -15,8 +18,18 @@ const AuthenticationPage = () => {
     resolver: zodResolver(formSchema(isRegistering)),
   });
 
+  const fetchCreateAccount = async (data: TCreateAccountProps) => {
+    try {
+      await createAccount(data);
+    } catch (error) {
+      showError(error);
+    }
+  };
+
   const onSubmit = (data: TFormSchema) => {
-    console.log(data);
+    if (isRegistering) {
+      fetchCreateAccount(data);
+    }
   };
 
   return (
