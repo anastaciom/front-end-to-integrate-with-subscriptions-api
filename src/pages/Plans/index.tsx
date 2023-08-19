@@ -42,10 +42,10 @@ const PlansPage = () => {
                   description={plan.description}
                   name={plan.name}
                   price={plan.price}
-                  priceId={plan.default_price}
+                  priceId={plan.priceId}
                 />
               ))}
-            </div>{" "}
+            </div>
           </>
         )}
       </section>

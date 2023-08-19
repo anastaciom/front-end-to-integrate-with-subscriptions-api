@@ -6,9 +6,14 @@ import { InputCustom } from "../../components/InputCustom";
 import { createAccount } from "./api";
 import { TCreateAccountProps } from "./api/types";
 import { showError } from "../../utils/showError";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const AuthenticationPage = () => {
   const [isRegistering, setIsRegistering] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { setAccessToken } = useAuth();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -20,15 +25,38 @@ const AuthenticationPage = () => {
 
   const fetchCreateAccount = async (data: TCreateAccountProps) => {
     try {
-      await createAccount(data);
+      setLoading(true);
+
+      const response = await createAccount(data);
+      const {
+        data: { accessToken: responseToken },
+      } = response;
+
+      setAccessToken(responseToken);
+
+      navigate("/plans");
     } catch (error) {
       showError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const onSubmit = (data: TFormSchema) => {
     if (isRegistering) {
       fetchCreateAccount(data);
+    }
+  };
+
+  const handleBtnText = () => {
+    if (loading) {
+      return "Carregando...";
+    }
+
+    if (isRegistering) {
+      return "Registrar";
+    } else {
+      return "Entrar";
     }
   };
 
@@ -80,9 +108,11 @@ const AuthenticationPage = () => {
 
           <button
             type="submit"
-            className="w-full bg-indigo-800 py-3 rounded-lg mt-12"
+            className={`w-full ${
+              loading ? "bg-indigo-900" : "bg-indigo-700"
+            }  py-3 rounded-lg mt-12`}
           >
-            {isRegistering ? "Registrar" : "Entrar"}
+            {handleBtnText()}
           </button>
         </form>
         <p className="mt-4 text-white text-right">

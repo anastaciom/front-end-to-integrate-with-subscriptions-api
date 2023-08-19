@@ -4,5 +4,5 @@ export interface IStatePlansProps {
   description: string;
   name: string;
   price: number;
-  default_price: string;
+  priceId: string;
 }
