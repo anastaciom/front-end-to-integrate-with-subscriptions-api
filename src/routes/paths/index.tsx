@@ -1,6 +1,7 @@
 import { PlansPage } from "../../pages/Plans";
 import { AuthenticationPage } from "../../pages/AuthenticationPage";
 import { TPathsProps } from "./types";
+import { Protected } from "./PrivateRoute";
 
 const paths: Array<TPathsProps> = [
   {
@@ -10,7 +11,11 @@ const paths: Array<TPathsProps> = [
 
   {
     path: "/plans",
-    element: <PlansPage />,
+    element: (
+      <Protected>
+        <PlansPage />
+      </Protected>
+    ),
   },
 ];
 

@@ -33,7 +33,7 @@ const AuthenticationPage = () => {
       } = response;
 
       setAccessToken(responseToken);
-
+      localStorage.setItem("is_auth", "true");
       navigate("/plans");
     } catch (error) {
       showError(error);

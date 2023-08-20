@@ -8,6 +8,7 @@ const api = axios.create({
 export const setBearerToken = (token: string) => {
   if (token) {
     api.defaults.headers["Authorization"] = `Bearer ${token}`;
+    localStorage.setItem("is_auth", "true");
   }
 };
 
@@ -21,6 +22,10 @@ async function refreshToken() {
 
     if (newAccessToken) {
       setBearerToken(newAccessToken);
+
+      return newAccessToken;
+    } else {
+      return null;
     }
   } catch (error) {
     showError(error);
@@ -42,9 +47,15 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true;
 
-      await refreshToken();
+      const newToken = await refreshToken();
 
-      return api(originalRequest);
+      if (newToken) {
+        originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+
+        return api(originalRequest);
+      } else {
+        localStorage.removeItem("is_auth");
+      }
     }
 
     return Promise.reject(error);
