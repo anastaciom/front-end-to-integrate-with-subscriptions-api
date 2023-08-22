@@ -1,5 +1,6 @@
 import axios from "axios";
-import { showError } from "../utils/showError";
+import { showError } from "../../utils/showError";
+import { refreshToken } from "./refreshToken";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API,
@@ -9,14 +10,14 @@ export const setBearerToken = (token: string) => {
   if (token) {
     api.defaults.headers["Authorization"] = `Bearer ${token}`;
     localStorage.setItem("is_auth", "true");
+  } else {
+    delete api.defaults.headers["Authorization"];
   }
 };
 
-async function refreshToken() {
+const handleRefreshToken = async () => {
   try {
-    const { data } = await api.get("/refresh-token", {
-      withCredentials: true,
-    });
+    const { data } = await refreshToken();
 
     const newAccessToken = data.accessToken;
 
@@ -30,7 +31,7 @@ async function refreshToken() {
   } catch (error) {
     showError(error);
   }
-}
+};
 
 api.interceptors.response.use(
   (response) => {
@@ -47,7 +48,7 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true;
 
-      const newToken = await refreshToken();
+      const newToken = await handleRefreshToken();
 
       if (newToken) {
         originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
@@ -55,6 +56,7 @@ api.interceptors.response.use(
         return api(originalRequest);
       } else {
         localStorage.removeItem("is_auth");
+        window.dispatchEvent(new Event("storage"));
       }
     }
 

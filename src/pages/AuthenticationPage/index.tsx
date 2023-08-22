@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TFormSchema, formSchema } from "./validate";
 import { InputCustom } from "../../components/InputCustom";
-import { createAccount } from "./api";
-import { TCreateAccountProps } from "./api/types";
+import { createAccount, login } from "./api";
+import { TCreateAccountParams, TLoginParams } from "./api/types";
 import { showError } from "../../utils/showError";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ const AuthenticationPage = () => {
     resolver: zodResolver(formSchema(isRegistering)),
   });
 
-  const fetchCreateAccount = async (data: TCreateAccountProps) => {
+  const fetchCreateAccount = async (data: TCreateAccountParams) => {
     try {
       setLoading(true);
 
@@ -34,7 +34,26 @@ const AuthenticationPage = () => {
 
       setAccessToken(responseToken);
       localStorage.setItem("is_auth", "true");
-      navigate("/plans");
+      navigate("/plans", { replace: true });
+    } catch (error) {
+      showError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchLogin = async (data: TLoginParams) => {
+    try {
+      setLoading(true);
+
+      const response = await login(data);
+      const {
+        data: { accessToken: responseToken },
+      } = response;
+
+      setAccessToken(responseToken);
+      localStorage.setItem("is_auth", "true");
+      navigate("/plans", { replace: true });
     } catch (error) {
       showError(error);
     } finally {
@@ -45,6 +64,8 @@ const AuthenticationPage = () => {
   const onSubmit = (data: TFormSchema) => {
     if (isRegistering) {
       fetchCreateAccount(data);
+    } else {
+      fetchLogin(data);
     }
   };
 
