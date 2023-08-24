@@ -1,6 +1,6 @@
 export interface IStatePlansProps {
   id: string;
-  metadata: { color_name: "yellow" | "blue" | "green" };
+  themeColor: "yellow" | "blue" | "green";
   description: string;
   name: string;
   price: number;

@@ -38,7 +38,7 @@ const PlansPage = () => {
               {plans.map((plan) => (
                 <PlanCard
                   key={plan.id}
-                  colorName={plan.metadata.color_name}
+                  colorName={plan.themeColor}
                   description={plan.description}
                   name={plan.name}
                   price={plan.price}
