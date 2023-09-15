@@ -26,7 +26,9 @@ const PlanCard = ({
       <h2 className={`text-xl mb-4 ${cardColor[colorName].text}`}>
         Plano {name}
       </h2>
-      <p className="text-gray-600 max-h-3/5 h-3/5">{description}</p>
+      <p className={`${cardColor[colorName].text} max-h-3/5 h-3/5`}>
+        {description}
+      </p>
       <div>
         <p className={`${cardColor[colorName].text} mt-4`}>
           {`${formatCurrency(price)}/mês`}

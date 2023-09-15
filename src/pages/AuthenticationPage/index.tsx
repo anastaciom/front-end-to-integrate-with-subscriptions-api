@@ -6,13 +6,13 @@ import { InputCustom } from "../../components/InputCustom";
 import { createAccount, login } from "./api";
 import { TCreateAccountParams, TLoginParams } from "./api/types";
 import { showError } from "../../utils/showError";
-import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useAccessTokenStore } from "../../hooks/store/accessToken";
 
 const AuthenticationPage = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setAccessToken } = useAuth();
+  const setAccessToken = useAccessTokenStore((state) => state.setAccessToken);
   const navigate = useNavigate();
 
   const {
@@ -33,7 +33,6 @@ const AuthenticationPage = () => {
       } = response;
 
       setAccessToken(responseToken);
-      localStorage.setItem("is_auth", "true");
       navigate("/plans", { replace: true });
     } catch (error) {
       showError(error);
@@ -52,7 +51,6 @@ const AuthenticationPage = () => {
       } = response;
 
       setAccessToken(responseToken);
-      localStorage.setItem("is_auth", "true");
       navigate("/plans", { replace: true });
     } catch (error) {
       showError(error);
@@ -83,13 +81,13 @@ const AuthenticationPage = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center">
-      <div className="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 p-8 bg-gray-900 rounded-lg shadow-lg">
+      <div className="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4 p-8 bg-secondary rounded-lg shadow-lg">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="space-y-4"
           noValidate
         >
-          <p className="text-3xl font-bold text-white mb-8">
+          <p className="text-3xl font-bold text-text mb-8">
             {isRegistering ? "Cadastro" : "Login"}
           </p>
 
@@ -129,20 +127,18 @@ const AuthenticationPage = () => {
 
           <button
             type="submit"
-            className={`w-full ${
-              loading ? "bg-indigo-900" : "bg-indigo-700"
-            }  py-3 rounded-lg mt-12`}
+            className="w-full bg-buttonPrimary py-3 rounded-lg mt-12"
           >
             {handleBtnText()}
           </button>
         </form>
-        <p className="mt-4 text-white text-right">
+        <p className="mt-4 text-text text-right">
           {isRegistering ? "Já tem uma conta?" : "Ainda não tem conta?"}
           <button
             onClick={() =>
               setIsRegistering((prevIsRegistering) => !prevIsRegistering)
             }
-            className="text-indigo-400 ml-1"
+            className="text-buttonSecondary ml-1 font-semibold"
           >
             {isRegistering ? "Faça o login." : "Cadastre-se."}
           </button>

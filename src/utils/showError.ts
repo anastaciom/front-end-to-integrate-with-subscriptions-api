@@ -2,7 +2,13 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const showError = ({ response }: AxiosError | any) => {
+const showError = (error: AxiosError | any) => {
+  if (!error) {
+    return;
+  }
+
+  const { response } = error;
+
   if (response?.data?.errors) {
     response?.data.errors.forEach((errorMsg: string) => {
       toast.error(errorMsg);

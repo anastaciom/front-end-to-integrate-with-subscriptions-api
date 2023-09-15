@@ -1,5 +1,5 @@
 export interface IInputCustomProps {
-  label: string;
+  label?: string;
   fieldName: string;
   error?: string;
   isPasswordField?: boolean;

@@ -25,17 +25,19 @@ const InputCustom = ({
 
   return (
     <div className={isPasswordField ? "relative" : "block"}>
-      <label htmlFor={fieldName} className="block text-gray-300 text-md">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={fieldName} className="block text-text text-md">
+          {label}
+        </label>
+      )}
       <input
         {...inputProps}
         type={inputType}
         id={fieldName}
-        className={`${inputProps.className} bg-slate-800 text-white border-2 ${
+        className={`${inputProps.className} bg-bgInput text-text border-2 ${
           error
-            ? "border-red-500 focus:border-red-500 shake"
-            : "border-slate-700 focus:border-slate-700"
+            ? "border-error focus:border-error shake"
+            : "border-borderInput focus:border-borderFocus"
         } outline-none focus:ring-0`}
         onChange={isPasswordField ? handlePasswordChange : inputProps.onChange}
       />
@@ -45,12 +47,12 @@ const InputCustom = ({
           onClick={togglePasswordVisibility}
           className={`${
             error ? "top-1/5 bottom-1/4" : "top-1/2 bottom-1/2"
-          } absolute  right-3 transform -translate-y-1/2 text-gray-300`}
+          } absolute  right-3 transform -translate-y-1/2 text-text`}
         >
           {showPassword ? "Esconder" : "Mostrar"}
         </button>
       )}
-      {error && <span className="text-xs text-red-500">{error}</span>}
+      {error && <span className="text-xs text-error">{error}</span>}
     </div>
   );
 };
