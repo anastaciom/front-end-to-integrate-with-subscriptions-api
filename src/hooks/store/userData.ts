@@ -35,8 +35,6 @@ const useUserData = create<TState>((set) => ({
         set(() => ({ userData: data }));
       } catch (error) {
         showError(error);
-
-        window.location.pathname = "/entrar";
       } finally {
         set(() => ({ loading: false }));
       }

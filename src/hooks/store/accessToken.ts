@@ -7,7 +7,7 @@ type TState = {
 };
 
 const useAccessTokenStore = create<TState>((set) => ({
-  accessToken: getCookie({ key: "accessToken" }) ?? null,
+  accessToken: getCookie({ key: "accessToken" }),
 
   setAccessToken: (newAccessToken: string | null) => {
     if (newAccessToken) {

@@ -2,6 +2,7 @@ import axios from "axios";
 import { showError } from "../../utils/showError";
 import { refreshToken } from "./refreshToken";
 import { getCookie, removeCookie, setCookie } from "../../utils/Cookies";
+import { logout } from "./logout";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API,
@@ -42,11 +43,11 @@ const setOrRemoveAccessTokenCookie = (token: string | null) => {
 api.interceptors.request.use(
   (request) => {
     const token = getCookie({ key: "accessToken" });
-    setAuthorizationHeader(token ?? null, request);
+    setAuthorizationHeader(token, request);
 
     return request;
   },
-  async (error) => {
+  (error) => {
     return error;
   }
 );
@@ -62,10 +63,15 @@ const handleRefreshToken = async () => {
     } else {
       return null;
     }
-  } catch (error) {
-    showError(error);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    if (error?.response?.status === 401) {
+      //TODO: CREATE A DIALOG TO APPEAR TO THE USER, SOMETHING LIKE:
+      // "TEMPO EXPIRADO, FAÇA O LOGIN NOVAMENTE";
+      window.location.pathname = "/entrar";
+    }
 
-    return null;
+    showError(error);
   }
 };
 
@@ -76,8 +82,20 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const statusCode = error.response && error.response.status;
+    const parsedResponse = JSON.parse(error.request.response);
+    const errorMessage = parsedResponse.error || "";
 
-    if (statusCode === 401 && originalRequest.url !== "/refresh-token") {
+    if (statusCode === 401 && errorMessage === "NO_REFRESH_TOKEN.") {
+      try {
+        await logout();
+        setOrRemoveAccessTokenCookie(null);
+        setAuthorizationHeader(null, originalRequest);
+
+        window.location.pathname = "/entrar";
+      } catch (error) {
+        showError(error);
+      }
+    } else if (statusCode === 401 && originalRequest.url !== "/refresh-token") {
       if (!isRefreshing) {
         isRefreshing = true;
 

@@ -15,8 +15,8 @@ const setCookie = ({
     secure?: boolean;
   };
 }) => {
-  const fiveDaysFromNow = new Date();
-  fiveDaysFromNow.setDate(fiveDaysFromNow.getDate() + 5);
+  const sevenDaysFromNow = new Date();
+  sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
 
   Cookies.set(
     key,
@@ -24,7 +24,7 @@ const setCookie = ({
     key === "accessToken"
       ? {
           sameSite: "strict",
-          expires: fiveDaysFromNow, // 5 days
+          expires: sevenDaysFromNow, // 7 days
           secure: false, //TODO: SET 'TRUE' IN PROD
         }
       : options
@@ -36,7 +36,7 @@ const removeCookie = ({ key }: { key: string }) => {
 };
 
 const getCookie = ({ key }: { key: string }) => {
-  return Cookies.get(key);
+  return Cookies.get(key) ?? null;
 };
 
 export { getCookie, removeCookie, setCookie };

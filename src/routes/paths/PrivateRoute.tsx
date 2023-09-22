@@ -4,6 +4,9 @@ import { useAccessTokenStore } from "../../hooks/store/accessToken";
 import { useUserData } from "../../hooks/store/userData";
 import { Loading } from "../../components/Loading";
 import { AccessDeniedPage } from "../../pages/errors/AccessDenied";
+import { getCookie } from "../../utils/Cookies";
+import { showError } from "../../utils/showError";
+import { logout } from "../../services/api/logout";
 
 type Props = {
   children: JSX.Element;
@@ -23,12 +26,25 @@ export const PrivateRoute: React.FC<Props> = ({ children, roles }) => {
     return true;
   };
 
+  const checkIfYouHaveTheAccessTokenInTheCookie = async () => {
+    if (pathname !== "/entrar" && token && !getCookie({ key: "accessToken" })) {
+      try {
+        await logout();
+      } catch (error) {
+        showError(error);
+      }
+    }
+  };
+
   useEffect(() => {
+    checkIfYouHaveTheAccessTokenInTheCookie();
+
     if (token && userData?.authorizations) {
       setIsVerified(true);
     } else {
       setIsVerified(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, userData]);
 
   if (isVerified && !userData?.subscription && pathname !== "/plans") {
