@@ -24,7 +24,7 @@ const useUserData = create<TState>((set) => ({
   reset: () => set(() => ({ loading: false, userData: null })),
 
   init: async () => {
-    const tokenFromCookie = getCookie({ key: "accessToken" });
+    const tokenFromCookie = getCookie({ key: "access_token" });
 
     if (tokenFromCookie && window.location.pathname !== "/entrar") {
       try {

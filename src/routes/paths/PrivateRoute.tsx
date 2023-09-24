@@ -27,7 +27,11 @@ export const PrivateRoute: React.FC<Props> = ({ children, roles }) => {
   };
 
   const checkIfYouHaveTheAccessTokenInTheCookie = async () => {
-    if (pathname !== "/entrar" && token && !getCookie({ key: "accessToken" })) {
+    if (
+      pathname !== "/entrar" &&
+      token &&
+      !getCookie({ key: "access_token" })
+    ) {
       try {
         await logout();
       } catch (error) {

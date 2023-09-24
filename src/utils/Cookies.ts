@@ -21,7 +21,7 @@ const setCookie = ({
   Cookies.set(
     key,
     value,
-    key === "accessToken"
+    key === "access_token"
       ? {
           sameSite: "strict",
           expires: sevenDaysFromNow, // 7 days

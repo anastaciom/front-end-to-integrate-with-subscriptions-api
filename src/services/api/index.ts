@@ -34,15 +34,15 @@ const setAuthorizationHeader = (token: string | null, requestConfig: any) => {
 
 const setOrRemoveAccessTokenCookie = (token: string | null) => {
   if (token) {
-    setCookie({ key: "accessToken", value: token });
+    setCookie({ key: "access_token", value: token });
   } else {
-    removeCookie({ key: "accessToken" });
+    removeCookie({ key: "access_token" });
   }
 };
 
 api.interceptors.request.use(
   (request) => {
-    const token = getCookie({ key: "accessToken" });
+    const token = getCookie({ key: "access_token" });
     setAuthorizationHeader(token, request);
 
     return request;
