@@ -37,8 +37,8 @@ const PlansPage = () => {
 
   return (
     <LayoutPage>
-      <section className="h-[calc(100vh_-_5rem)] flex md:justify-center flex-col items-center overflow-y-auto">
-        <div className="bg-secondary w-4/5 p-8 mt-10 md:mt-5 rounded-2xl shadow-2xl">
+      <section className="h-[calc(100vh_-_5rem)] flex flex-col items-center overflow-y-auto">
+        <div className="bg-secondary w-4/5 p-4 mt-10 rounded-2xl shadow-2xl">
           {loadingPlans ? (
             <h1 className="text-2xl font-bold flex items-center justify-center tracking-wide">
               Carregando planos disponíveis...
@@ -48,9 +48,10 @@ const PlansPage = () => {
               <h1 className="text-2xl font-semibold mb-4">
                 Escolha o seu plano
               </h1>
-              <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {plans.map((plan) => (
                   <PlanCard
+                    featuresList={plan.featuresList}
                     key={plan.id}
                     colorName={plan.themeColor}
                     description={plan.description}
