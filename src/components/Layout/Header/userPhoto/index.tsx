@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { OptionsUser } from "../dropdown/OptionsUser";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useUserData } from "../../../../hooks/store/userData";
 
 export const UserPhoto = () => {
+  const userData = useUserData((state) => state.userData);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
@@ -24,8 +26,8 @@ export const UserPhoto = () => {
       <img
         id="avatarButton"
         className="w-9 h-9 rounded-full "
-        src={""} //TODO: SET USER PHOTO
-        alt="User dropdown"
+        src={userData?.avatarUrl ?? ""}
+        alt="avatar"
       />
       {isDropdownVisible ? (
         <ChevronUp {...iconsProps} />

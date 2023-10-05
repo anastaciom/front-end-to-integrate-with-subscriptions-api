@@ -4,6 +4,7 @@ import { showError } from "../../utils/showError";
 import { getCookie } from "../../utils/Cookies";
 
 interface IUserData {
+  avatarUrl: string | null;
   email: string;
   name: string;
   authorizations: string[];
