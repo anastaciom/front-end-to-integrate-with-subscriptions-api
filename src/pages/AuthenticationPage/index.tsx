@@ -14,6 +14,9 @@ const AuthenticationPage = () => {
   const navigate = useNavigate();
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [avatarUrl, setAvatarUrl] = useState<string>(
+    "https://api.dicebear.com/7.x/initials/svg?seed="
+  );
   const setAccessToken = useAccessTokenStore((state) => state.setAccessToken);
 
   const {
@@ -25,7 +28,11 @@ const AuthenticationPage = () => {
     resolver: zodResolver(formSchema(isRegistering)),
   });
 
-  const fetchCreateAccount = async (data: TCreateAccountParams) => {
+  const fetchCreateAccount = async (
+    data: TCreateAccountParams & {
+      avatarUrl: string;
+    }
+  ) => {
     try {
       setLoading(true);
 
@@ -63,7 +70,7 @@ const AuthenticationPage = () => {
 
   const onSubmit = (data: TFormSchema) => {
     if (isRegistering) {
-      fetchCreateAccount(data);
+      fetchCreateAccount({ ...data, avatarUrl });
     } else {
       fetchLogin(data);
     }
@@ -94,7 +101,13 @@ const AuthenticationPage = () => {
               {isRegistering ? "Cadastro" : "Login"}
             </p>
 
-            {isRegistering && <SelectAvatar fieldNameValue={watch().name} />}
+            {isRegistering && (
+              <SelectAvatar
+                fieldNameValue={watch().name}
+                setAvatar={setAvatarUrl}
+                avatarUrl={avatarUrl}
+              />
+            )}
           </div>
 
           {isRegistering && (

@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
 import { AVATARS } from "../../../../constants/avatars";
 
-const SelectAvatar = ({ fieldNameValue }: { fieldNameValue: string }) => {
+const SelectAvatar = ({
+  setAvatar,
+  avatarUrl,
+  fieldNameValue,
+}: {
+  fieldNameValue: string;
+  avatarUrl: string;
+  setAvatar: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const [avatars, setAvatars] = useState<Array<string>>(AVATARS);
   const [showDialog, setShowDialog] = useState<boolean>(false);
-  const [avatarUrl, setAvatarUrl] = useState<string>(
-    "https://api.dicebear.com/7.x/initials/svg?seed="
-  );
 
   const getInitialOfUser = () => {
     return fieldNameValue?.length ? fieldNameValue[0] : "";
@@ -25,7 +30,7 @@ const SelectAvatar = ({ fieldNameValue }: { fieldNameValue: string }) => {
     );
 
     if (avatarUrl.includes(avatarWithInitials)) {
-      setAvatarUrl(
+      setAvatar(
         `https://api.dicebear.com/7.x/initials/svg?seed=${getInitialOfUser()}`
       );
     }
@@ -60,7 +65,7 @@ const SelectAvatar = ({ fieldNameValue }: { fieldNameValue: string }) => {
                 alt={`Avatar ${index}`}
                 className="w-14 h-14 cursor-pointer select-none rounded-full border-borderFocus border-2 bg-bgInput"
                 onClick={() => {
-                  setAvatarUrl(url);
+                  setAvatar(url);
                   setShowDialog(false);
                 }}
               />
