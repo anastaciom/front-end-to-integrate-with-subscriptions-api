@@ -1,0 +1,26 @@
+const AVATARS = [
+  "https://api.dicebear.com/7.x/initials/svg?seed=",
+  "https://api.dicebear.com/7.x/open-peeps/svg?seed=Tigger",
+  "https://api.dicebear.com/7.x/open-peeps/svg?seed=Toby",
+  "https://api.dicebear.com/7.x/open-peeps/svg?seed=Spooky",
+  "https://api.dicebear.com/7.x/open-peeps/svg?seed=Lucy",
+  "https://api.dicebear.com/7.x/open-peeps/svg?seed=Aneka",
+  "https://api.dicebear.com/7.x/open-peeps/svg?seed=Felix",
+  "https://api.dicebear.com/7.x/open-peeps/svg?seed=Bear",
+  "https://api.dicebear.com/7.x/open-peeps/svg?seed=Oscar",
+  "https://api.dicebear.com/7.x/micah/svg?seed=Tigger",
+  "https://api.dicebear.com/7.x/micah/svg?seed=Sassy",
+  "https://api.dicebear.com/7.x/micah/svg?seed=Toby",
+  "https://api.dicebear.com/7.x/micah/svg?seed=Oscar",
+  "https://api.dicebear.com/7.x/micah/svg?seed=Cali",
+  "https://api.dicebear.com/7.x/micah/svg?seed=Willow",
+  "https://api.dicebear.com/7.x/lorelei/svg?seed=Toby",
+  "https://api.dicebear.com/7.x/lorelei/svg?seed=Oreo",
+  "https://api.dicebear.com/7.x/lorelei/svg?seed=Bear",
+  "https://api.dicebear.com/7.x/lorelei/svg?seed=Lucy",
+  "https://api.dicebear.com/7.x/lorelei/svg?seed=Sheba",
+  "https://api.dicebear.com/7.x/lorelei/svg?seed=Salem",
+  "https://api.dicebear.com/7.x/lorelei/svg?seed=Lucky",
+];
+
+export { AVATARS };

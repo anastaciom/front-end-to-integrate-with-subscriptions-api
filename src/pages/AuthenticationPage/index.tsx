@@ -8,16 +8,18 @@ import { TCreateAccountParams, TLoginParams } from "./api/types";
 import { showError } from "../../utils/showError";
 import { useNavigate } from "react-router-dom";
 import { useAccessTokenStore } from "../../hooks/store/accessToken";
+import { SelectAvatar } from "./components/SelectAvatar";
 
 const AuthenticationPage = () => {
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const setAccessToken = useAccessTokenStore((state) => state.setAccessToken);
   const navigate = useNavigate();
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const setAccessToken = useAccessTokenStore((state) => state.setAccessToken);
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<TFormSchema>({
     resolver: zodResolver(formSchema(isRegistering)),
@@ -87,9 +89,13 @@ const AuthenticationPage = () => {
           className="space-y-4"
           noValidate
         >
-          <p className="text-3xl font-bold text-text mb-8">
-            {isRegistering ? "Cadastro" : "Login"}
-          </p>
+          <div className="w-full h-20 flex justify-between">
+            <p className="text-3xl font-bold text-text mb-8">
+              {isRegistering ? "Cadastro" : "Login"}
+            </p>
+
+            {isRegistering && <SelectAvatar fieldNameValue={watch().name} />}
+          </div>
 
           {isRegistering && (
             <InputCustom
