@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import api from "../../services/api";
-import { showError } from "../../utils/showError";
-import { getCookie } from "../../utils/Cookies";
+import api from "../services/api";
+import { showError } from "../utils/showError";
+import { getCookie } from "../utils/Cookies";
 
 interface IUserData {
   avatarUrl: string | null;

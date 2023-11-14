@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAccessTokenStore } from "../../hooks/store/accessToken";
+import { useAccessTokenStore } from "../../hooks/accessToken";
 
 type Props = {
   children: JSX.Element;

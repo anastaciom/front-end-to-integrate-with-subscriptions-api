@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useUserData } from "../../../../hooks/store/userData";
+import { useUserData } from "../../../../hooks/userData";
 import { logout } from "../../../../services/api/logout";
 import { showError } from "../../../../utils/showError";
-import { useAccessTokenStore } from "../../../../hooks/store/accessToken";
+import { useAccessTokenStore } from "../../../../hooks/accessToken";
 
 export const OptionsUser = () => {
   const userData = useUserData((state) => state.userData);

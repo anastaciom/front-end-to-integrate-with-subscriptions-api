@@ -9,21 +9,6 @@ const api = axios.create({
 });
 
 let isRefreshing: boolean;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let failedQueue: any[] = [];
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const processQueue = (error: any, token: string | null = null) => {
-  failedQueue.forEach((req) => {
-    if (token) {
-      req.resolve(token);
-    } else {
-      req.reject(error);
-    }
-  });
-
-  failedQueue = [];
-};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const setAuthorizationHeader = (token: string | null, requestConfig: any) => {
@@ -83,13 +68,12 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     const statusCode = error.response && error.response.status;
     const parsedResponse = JSON.parse(error.request.response);
-    const errorMessage = parsedResponse.error || "";
+    const errorFlag = parsedResponse.flag ?? "";
 
-    if (statusCode === 401 && errorMessage === "NO_REFRESH_TOKEN.") {
+    if (statusCode === 401 && errorFlag === "NO_REFRESH_TOKEN") {
       try {
         await logout();
         setOrRemoveAccessTokenCookie(null);
-        setAuthorizationHeader(null, originalRequest);
 
         window.location.pathname = "/entrar";
       } catch (error) {
@@ -101,28 +85,17 @@ api.interceptors.response.use(
 
         try {
           const newToken = await handleRefreshToken();
-          setOrRemoveAccessTokenCookie(newToken);
-          processQueue(null, newToken);
+          setOrRemoveAccessTokenCookie(newToken as string);
+          return await api(originalRequest);
         } catch (err) {
-          processQueue(err, null);
+          showError(err);
         } finally {
           isRefreshing = false;
         }
       }
-
-      return new Promise((resolve, reject) => {
-        failedQueue.push({ resolve, reject });
-      })
-        .then((token) => {
-          setAuthorizationHeader(token as string, originalRequest);
-          return api(originalRequest);
-        })
-        .catch((err) => {
-          return Promise.reject(err);
-        });
+    } else {
+      return Promise.reject(error);
     }
-
-    return Promise.reject(error);
   }
 );
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAccessTokenStore } from "../../hooks/store/accessToken";
-import { useUserData } from "../../hooks/store/userData";
+import { useAccessTokenStore } from "../../hooks/accessToken";
+import { useUserData } from "../../hooks/userData";
 import { Loading } from "../../components/Loading";
 import { AccessDeniedPage } from "../../pages/errors/AccessDenied";
 import { getCookie } from "../../utils/Cookies";

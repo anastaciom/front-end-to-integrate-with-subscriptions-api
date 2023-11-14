@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { PlanCard } from "./components/PlanCard";
 import { IStatePlansProps } from "./types";
 import { fetchAllPlans } from "./api";
-import { useUserData } from "../../hooks/store/userData";
+import { useUserData } from "../../hooks/userData";
 import { useNavigate } from "react-router-dom";
 import { LayoutPage } from "../../components/Layout";
 

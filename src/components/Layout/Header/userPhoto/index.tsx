@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { OptionsUser } from "../dropdown/OptionsUser";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { useUserData } from "../../../../hooks/store/userData";
+import { useUserData } from "../../../../hooks/userData";
 
 export const UserPhoto = () => {
   const userData = useUserData((state) => state.userData);

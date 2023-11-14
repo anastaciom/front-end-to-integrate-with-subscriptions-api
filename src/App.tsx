@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { useAccessTokenStore } from "./hooks/store/accessToken";
-import { useUserData } from "./hooks/store/userData";
+import { useAccessTokenStore } from "./hooks/accessToken";
+import { useUserData } from "./hooks/userData";
 import { RouterProvider } from "react-router-dom";
 import routes from "./routes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function App() {
   const accessToken = useAccessTokenStore((state) => state.accessToken);
@@ -14,9 +16,10 @@ export default function App() {
   }, [accessToken]);
 
   return (
-    <>
+    <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+      {/* //TODO: CHANGE COLOR */}
       <RouterProvider router={routes} />
       <ToastContainer theme="dark" position="bottom-right" />
-    </>
+    </SkeletonTheme>
   );
 }

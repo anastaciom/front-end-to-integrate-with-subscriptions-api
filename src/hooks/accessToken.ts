@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getCookie, removeCookie, setCookie } from "../../utils/Cookies";
+import { getCookie, removeCookie, setCookie } from "../utils/Cookies";
 
 type TState = {
   accessToken: string | null;

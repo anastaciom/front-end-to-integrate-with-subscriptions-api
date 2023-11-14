@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const showError = (error: AxiosError | any) => {
-  if (!error) {
+  if (!error || !error.response) {
     return;
   }
 

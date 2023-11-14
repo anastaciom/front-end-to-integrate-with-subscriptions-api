@@ -7,7 +7,7 @@ import { createAccount, login } from "./api";
 import { TCreateAccountParams, TLoginParams } from "./api/types";
 import { showError } from "../../utils/showError";
 import { useNavigate } from "react-router-dom";
-import { useAccessTokenStore } from "../../hooks/store/accessToken";
+import { useAccessTokenStore } from "../../hooks/accessToken";
 import { SelectAvatar } from "./components/SelectAvatar";
 
 const AuthenticationPage = () => {

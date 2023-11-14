@@ -1,6 +1,6 @@
 import React from "react";
-import { useAccessTokenStore } from "../../hooks/store/accessToken";
-import { useUserData } from "../../hooks/store/userData";
+import { useAccessTokenStore } from "../../hooks/accessToken";
+import { useUserData } from "../../hooks/userData";
 
 type Props = {
   titleError: string;
