@@ -1,4 +1,4 @@
-import { TLanguage } from "../types";
+import { TImageType, TLanguage } from "../../../types";
 
 const languageOptions: Array<{ label: string; value: TLanguage }> = [
   { label: "Čeština", value: "cs" },
@@ -29,4 +29,11 @@ const languageOptions: Array<{ label: string; value: TLanguage }> = [
   { label: "中文", value: "zh" },
 ];
 
-export { languageOptions };
+const imageTypesOptions: Array<{ label: string; value: TImageType }> = [
+  { label: "Todos os tipos", value: "all" },
+  { label: "Vector", value: "vector" },
+  { label: "Ilustração", value: "illustration" },
+  { label: "Foto", value: "photo" },
+];
+
+export { languageOptions, imageTypesOptions };
