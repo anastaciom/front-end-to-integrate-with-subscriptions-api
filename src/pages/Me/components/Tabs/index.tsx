@@ -1,5 +1,6 @@
-import React from "react";
+import { memo } from "react";
 import { ITabsProps, TTabs } from "./types";
+import { TOrderType } from "../../types";
 
 const TABS: TTabs[] = [
   {
@@ -14,9 +15,9 @@ const TABS: TTabs[] = [
   },
 ];
 
-const Tabs = React.memo(
+const Tabs = memo(
   ({ registerFieldInForm, filterType, changeFilter }: ITabsProps) => {
-    const handleButtonClick = (nome: "latest" | "popular") => {
+    const handleButtonClick = (nome: TOrderType) => {
       if (filterType !== nome) {
         changeFilter(nome);
       }
@@ -30,8 +31,12 @@ const Tabs = React.memo(
               <button
                 type="button"
                 {...registerFieldInForm("order")}
-                className={`inline-block w-full p-4 focus:outline-none ${
-                  filterType === nome ? "bg-buttonPrimary" : ""
+                className={`inline-block w-full p-4 focus:outline-none transition-colors ease-in-out ${
+                  filterType === nome
+                    ? "bg-buttonPrimary"
+                    : filterType !== nome
+                    ? "hover:bg-secondary"
+                    : ""
                 } ${className}`}
                 onClick={() => handleButtonClick(nome)}
               >

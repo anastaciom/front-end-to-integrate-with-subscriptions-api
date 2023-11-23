@@ -1,4 +1,4 @@
-import { TImages } from "../../../types";
+import { TImageType, TImages, TLanguage, TOrderType } from "../../../types";
 
 export interface TImagesGridProps {
   isSubmitting: boolean;
@@ -6,9 +6,10 @@ export interface TImagesGridProps {
   loadingImages: boolean;
   hasMore: boolean;
   values: {
-    imageType: "all" | "photo" | "illustration" | "vector" | undefined;
-    order: "popular" | "latest" | undefined;
-    searchPhoto: string | undefined;
+    imageType: TImageType;
+    order: TOrderType;
+    searchPhoto?: string;
+    lang: TLanguage;
   };
   setSeeMore: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -35,10 +35,7 @@ export const OptionsUser = () => {
   };
 
   return (
-    <div
-      id="userDropdown"
-      className="absolute top-full right-0 z-10 divide-y divide-divider rounded-lg shadow w-56 bg-secondary"
-    >
+    <div className="divide-y divide-divider rounded-lg w-56 bg-secondary">
       <div className="px-4 py-3 text-sm">
         <div className="truncate font-semibold">{userData?.name}</div>
         <div className="truncate">{userData?.email}</div>

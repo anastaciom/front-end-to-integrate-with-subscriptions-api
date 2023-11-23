@@ -96,7 +96,7 @@ export const Sidebar = () => {
                 </p>
                 <a
                   href="#"
-                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-text  border border-secondary rounded-lg hover:bg-buttonSecondary"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-text  border border-secondary rounded-lg hover:bg-buttonPrimaryHover"
                 >
                   Ver mais
                   <MoveUpRight size={18} />

@@ -2,30 +2,41 @@ import {
   UseFormRegister,
   UseFormHandleSubmit,
   FieldErrors,
+  UseFormResetField,
 } from "react-hook-form";
 import { TSearchSchema } from "../validate";
+import { TImageType, TLanguage, TOrderType } from "../../../types";
 
 export interface TFormProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<{
-    searchPhoto?: string | undefined;
-    imageType?: "all" | "photo" | "illustration" | "vector" | undefined;
-    order?: "popular" | "latest" | undefined;
+    searchPhoto?: string;
+    imageType: TImageType;
+    order: TOrderType;
+    lang: TLanguage;
   }>;
   handleSubmit: UseFormHandleSubmit<
     {
-      searchPhoto?: string | undefined;
-      imageType?: "all" | "photo" | "illustration" | "vector" | undefined;
-      order?: "popular" | "latest" | undefined;
+      searchPhoto?: string;
+      imageType: TImageType;
+      order: TOrderType;
+      lang: TLanguage;
     },
     undefined
   >;
   errors: FieldErrors<{
-    searchPhoto?: string | undefined;
-    imageType?: "all" | "photo" | "illustration" | "vector" | undefined;
-    order?: "popular" | "latest" | undefined;
+    searchPhoto?: string;
+    imageType: TImageType;
+    order: TOrderType;
+    lang: TLanguage;
   }>;
-  changeFilter: (newFilterType: "popular" | "latest") => void;
+  changeFilter: (newFilterType: TOrderType) => void;
   onSubmit: ({ imageType, order, searchPhoto }: TSearchSchema) => Promise<void>;
-  filterType: "popular" | "latest" | undefined;
+  filterType: TOrderType;
+  isDirty: boolean;
+  resetFilter: UseFormResetField<{
+    imageType: TImageType;
+    order: TOrderType;
+    lang: TLanguage;
+    searchPhoto?: string | undefined;
+  }>;
 }

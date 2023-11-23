@@ -1,16 +1,19 @@
 import { UseFormRegister } from "react-hook-form";
+import { TImageType, TLanguage, TOrderType } from "../../../types";
 
 export interface ITabsProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   registerFieldInForm: UseFormRegister<{
-    order?: "popular" | "latest" | undefined;
+    searchPhoto?: string;
+    imageType: TImageType;
+    order: TOrderType;
+    lang: TLanguage;
   }>;
-  filterType: "popular" | "latest" | undefined;
-  changeFilter: (newFilterType: "popular" | "latest") => void;
+  filterType: TOrderType;
+  changeFilter: (newFilterType: TOrderType) => void;
 }
 
 export type TTabs = {
-  nome: "latest" | "popular";
+  nome: TOrderType;
   title: "Recentes" | "Populares";
   className: string;
 };

@@ -114,10 +114,10 @@ const AuthenticationPage = () => {
             <InputCustom
               fieldName="name"
               label="Nome"
+              register={register}
               error={errors.name && errors.name.message}
               inputProps={{
                 className: "w-full p-2.5 rounded-lg",
-                ...register("name"),
                 type: "text",
               }}
             />
@@ -125,21 +125,21 @@ const AuthenticationPage = () => {
           <InputCustom
             fieldName="email"
             label="E-mail"
+            register={register}
             error={errors.email && errors.email.message}
             inputProps={{
               className: "w-full p-2.5 rounded-lg",
-              ...register("email"),
               type: "email",
             }}
           />
           <InputCustom
             fieldName="password"
             label="Senha"
+            register={register}
             isPasswordField
             error={errors.password && errors.password.message}
             inputProps={{
               className: "w-full p-2.5 rounded-lg",
-              ...register("password"),
               type: "password",
             }}
           />
@@ -157,7 +157,7 @@ const AuthenticationPage = () => {
             onClick={() =>
               setIsRegistering((prevIsRegistering) => !prevIsRegistering)
             }
-            className="text-buttonSecondary ml-1 font-semibold"
+            className="text-buttonPrimary ml-1 font-semibold"
           >
             {isRegistering ? "Faça o login." : "Cadastre-se."}
           </button>

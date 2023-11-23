@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { getImages } from "./api";
 import { useEffect, useState } from "react";
 import { showError } from "../../utils/showError";
-import { TDialog, TImages } from "./types";
+import { TDialog, TImages, TOrderType } from "./types";
 import { handleCountFormatting } from "../../utils/CountFormatting";
 import { Form } from "./components/Form";
 import { PlanDialog } from "./components/PlanDialog";
@@ -28,39 +28,40 @@ export const MePage = () => {
     getValues,
     setValue,
     watch,
-    formState: { errors, defaultValues, isSubmitting },
+    resetField,
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<TSearchSchema>({
     defaultValues: {
       imageType: "all",
       order: "latest",
       searchPhoto: "",
+      lang: "pt",
     },
     resolver: zodResolver(searchSchema),
   });
   const filterType = watch("order");
-  const { imageType, order, searchPhoto } = getValues();
 
   useEffect(() => {
-    fetchImages({ ...defaultValues, pageNum: page });
+    const { imageType, order, searchPhoto, lang } = getValues();
+
+    fetchImages({ imageType, lang, order, searchPhoto, pageNum: page });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    const { imageType, order, searchPhoto, lang } = getValues();
+
     if (seeMore) {
-      fetchImages({ imageType, order, searchPhoto, pageNum: page + 1 });
+      fetchImages({ imageType, order, searchPhoto, lang, pageNum: page + 1 });
       setPage((prevPage) => prevPage + 1);
       setSeeMore(false);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seeMore]);
 
   useEffect(() => {
     if (changePhotoListingOrder) {
-      setImages([]);
-      setHasMore(false);
-      fetchImages({ imageType, order, searchPhoto, pageNum: 1 });
-      setPage(1);
+      handleSubmit((data) => onSubmit(data))();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterType, changePhotoListingOrder]);
@@ -70,6 +71,7 @@ export const MePage = () => {
     searchPhoto,
     imageType,
     pageNum = 1,
+    lang,
   }: TSearchSchema & {
     pageNum: number;
   }) => {
@@ -84,7 +86,7 @@ export const MePage = () => {
         per_page: 20,
         ...hasSearch,
         image_type: imageType ?? "all",
-        lang: "pt",
+        lang,
       });
 
       const formattedData = data.map(({ views, ...rest }: TImages) => ({
@@ -114,13 +116,13 @@ export const MePage = () => {
     setImages([]);
   };
 
-  const onSubmit = ({ imageType, order, searchPhoto }: TSearchSchema) => {
+  const onSubmit = ({ imageType, order, searchPhoto, lang }: TSearchSchema) => {
     resetFilters();
 
-    return fetchImages({ imageType, order, searchPhoto, pageNum: 1 });
+    return fetchImages({ imageType, order, searchPhoto, lang, pageNum: 1 });
   };
 
-  const changeFilter = (newFilterType: "popular" | "latest") => {
+  const changeFilter = (newFilterType: TOrderType) => {
     setValue("order", newFilterType);
     setChangePhotoListingOrder(true);
   };
@@ -130,19 +132,21 @@ export const MePage = () => {
       <PlanDialog dialogData={dialogData} setDialogData={setDialogData} />
       <div className="w-full mt-10">
         <Form
+          resetFilter={resetField}
           register={register}
           handleSubmit={handleSubmit}
           errors={errors}
           changeFilter={changeFilter}
           onSubmit={onSubmit}
           filterType={filterType}
+          isDirty={isDirty}
         />
         <ImagesGrid
           isSubmitting={isSubmitting}
           images={images}
           loadingImages={loadingImages}
           hasMore={hasMore}
-          values={{ imageType, order, searchPhoto }}
+          values={getValues()}
           setSeeMore={setSeeMore}
         />
       </div>

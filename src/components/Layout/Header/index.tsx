@@ -7,8 +7,8 @@ export const Header = () => {
       <strong className="text-2xl font-bold tracking-wide w-[80%] ">
         SubscriptionsApp.
       </strong>
-      <div className="flex items-center justify-end h-full w-[20%] gap-8">
-        <button className="rounded-full bg-secondary hover:bg-background h-3/6 w-10 flex justify-center items-center">
+      <div className="flex items-center justify-end h-full w-[20%] gap-8 ">
+        <button className="rounded-full hover:bg-secondary border-2 border-secondary h-3/5 w-12 flex justify-center items-center">
           <Bell />
         </button>
         <UserPhoto />

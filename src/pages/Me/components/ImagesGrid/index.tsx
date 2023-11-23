@@ -26,7 +26,7 @@ const ImagesGrid = ({
       !loadingImages &&
       !images.length ? (
         <div className="w-full h-full flex justify-center items-center italic font-semibold">
-          Nenhum item encontrado
+          Nenhuma imagem encontrada
         </div>
       ) : (values.imageType || values.order || values.searchPhoto) &&
         isSubmitting &&
@@ -62,7 +62,7 @@ const ImagesGrid = ({
           ) : (
             <button
               onClick={() => setSeeMore(true)}
-              className="p-1 bg-slate-900 rounded-lg px-2 text-xs border-none hover:bg-slate-600 transition-colors"
+              className="p-1 bg-buttonSecondary rounded-lg px-2 text-xs border-none hover:bg-buttonSecondaryHover transition-colors"
             >
               Ver mais
             </button>

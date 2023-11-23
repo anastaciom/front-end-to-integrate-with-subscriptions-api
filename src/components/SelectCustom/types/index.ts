@@ -1,13 +1,14 @@
 import { UseFormRegister } from "react-hook-form";
 
-export interface IInputCustomProps {
+export interface ISelectCustomProps {
   label?: string;
   fieldName: string;
   error?: string;
-  isPasswordField?: boolean;
+  options: Array<TSelectOptions>;
   inputProps: Omit<React.InputHTMLAttributes<HTMLInputElement>, "id" | "name">;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
+  optionPlaceholder?: string;
   labelTextSize?:
     | "xs"
     | "sm"
@@ -23,3 +24,8 @@ export interface IInputCustomProps {
     | "8xl"
     | "9xl";
 }
+
+export type TSelectOptions = {
+  label: string;
+  value: string | number;
+};

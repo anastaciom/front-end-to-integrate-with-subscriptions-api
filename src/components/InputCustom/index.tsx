@@ -8,9 +8,13 @@ const InputCustom = ({
   error,
   isPasswordField = false,
   inputProps,
+  labelTextSize,
+  register,
 }: IInputCustomProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [hasPasswordValue, setHasPasswordValue] = useState(false);
+  const labelText = labelTextSize ? `text-${labelTextSize}` : "text-md";
+  const inputType = isPasswordField && showPassword ? "text" : inputProps.type;
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -21,18 +25,17 @@ const InputCustom = ({
     inputProps.onChange?.(event);
   };
 
-  const inputType = isPasswordField && showPassword ? "text" : inputProps.type;
-
   return (
     <div className={isPasswordField ? "relative" : "block"}>
       {label && (
-        <label htmlFor={fieldName} className="block text-text text-md">
+        <label htmlFor={fieldName} className={`block text-text ${labelText}`}>
           {label}
         </label>
       )}
       <input
         {...inputProps}
         type={inputType}
+        {...register(fieldName)}
         id={fieldName}
         className={`${inputProps.className} bg-bgInput text-text border-2 ${
           error
