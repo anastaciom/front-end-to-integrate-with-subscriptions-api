@@ -3,14 +3,8 @@ import "./style.css";
 import { BeatLoader } from "react-spinners";
 import { Image } from "../Image";
 import { TImagesGridProps } from "./types";
-
-const breakpointColumnsObj = {
-  default: 4,
-  1200: 2,
-  992: 2,
-  768: 1,
-  576: 1,
-};
+import { breakpointColumnsObj } from "./helpers";
+import { SkeletonGrid } from "./Skeleton";
 
 const ImagesGrid = ({
   isSubmitting,
@@ -31,9 +25,7 @@ const ImagesGrid = ({
       ) : (values.imageType || values.order || values.searchPhoto) &&
         isSubmitting &&
         loadingImages ? (
-        <div className="w-full h-full flex justify-center items-center">
-          <BeatLoader color="#fff" size={28} />
-        </div>
+        <SkeletonGrid />
       ) : (
         <Masonry
           breakpointCols={breakpointColumnsObj}

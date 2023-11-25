@@ -16,8 +16,7 @@ export default function App() {
   }, [accessToken]);
 
   return (
-    <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-      {/* //TODO: CHANGE COLOR */}
+    <SkeletonTheme>
       <RouterProvider router={routes} />
       <ToastContainer theme="dark" position="bottom-right" />
     </SkeletonTheme>
